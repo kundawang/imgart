@@ -38,8 +38,8 @@ func TestGetAllEffects(t *testing.T) {
 
 	numOfEffects := len(effects)
 
-	if numOfEffects != 8 {
-		t.Errorf("Expect 8 effects and got: %d", numOfEffects)
+	if numOfEffects != 9 {
+		t.Errorf("Expect 9 effects and got: %d", numOfEffects)
 	}
 }
 

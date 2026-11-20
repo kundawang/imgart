@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image"
 	"image/color"
+	"math"
 	"net/url"
 
 	"github.com/disintegration/imaging"
@@ -86,6 +87,28 @@ func floatBinder(key string, params map[string]interface{}) (float64, error) {
 
 	if !ok {
 		return 0, errors.EValidation(fmt.Sprintf("Parameter %s needs to be a float", key), nil)
+	}
+
+	return valueFloat, nil
+}
+
+// optionalFloatBinder returns the parameter value or the default when it's missing.
+// A present parameter still needs to be a float and a finite number.
+func optionalFloatBinder(key string, params map[string]interface{}, defaultVal float64) (float64, error) {
+	value, ok := params[key]
+
+	if !ok {
+		return defaultVal, nil
+	}
+
+	valueFloat, ok := value.(float64)
+
+	if !ok {
+		return 0, errors.EValidation(fmt.Sprintf("Parameter %s needs to be a float", key), nil)
+	}
+
+	if math.IsNaN(valueFloat) || math.IsInf(valueFloat, 0) {
+		return 0, errors.EValidation(fmt.Sprintf("Parameter %s needs to be a finite number", key), nil)
 	}
 
 	return valueFloat, nil

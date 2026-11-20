@@ -24,6 +24,7 @@ func NewImageRepository(imgRepo imgart.ImageRepository) imgart.EffectRepository 
 			effect.NewGamma(),
 			effect.NewContrast(),
 			effect.NewCrop(),
+			effect.NewWhiteBalance(),
 		},
 	}
 }
